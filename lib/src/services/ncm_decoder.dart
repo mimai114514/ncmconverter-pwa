@@ -30,15 +30,20 @@ class NcmDecoder {
 
   NcmDecoder._();
 
-  /// 解密单个文件（在后台 Isolate 执行）
+  /// 解密单个文件（在后台 Isolate 执行，Web 端在主线程执行）
   Future<DecodeResult> decodeBytes(Uint8List bytes, String fileName) async {
     try {
-      // 在后台线程执行解密
-      final result = await compute(
-        _decodeInIsolate,
-        _DecodeParams(bytes, fileName),
-      );
-      return result;
+      if (kIsWeb) {
+        // Web 端直接在主线程执行（配合 Web Worker 防止卡顿）
+        return await _decodeInIsolate(_DecodeParams(bytes, fileName));
+      } else {
+        // Native 端在后台线程执行
+        final result = await compute(
+          _decodeInIsolate,
+          _DecodeParams(bytes, fileName),
+        );
+        return result;
+      }
     } catch (e) {
       return DecodeResult(
         success: false,

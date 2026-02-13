@@ -3,7 +3,9 @@
 
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:pointycastle/pointycastle.dart';
+import '../services/web_worker_service.dart';
 
 /// NCM 解密核心类
 class NcmDump {
@@ -110,6 +112,19 @@ class NcmDump {
       // 如果 inputBytes 是通过 FilePicker 获得的，通常是只读的或者为了节省内存我们不应该修改它？
       // 不，inputBytes如果是从FilePicker result.files.first.bytes拿到的，是可以修改的。
       // 但为了安全起见，这里我们创建一个新的 Uint8List 作为输出。
+
+      if (kIsWeb) {
+        // Web 端使用原生 Worker 进行解密，避免主线程卡顿
+        try {
+          final workerService = WebWorkerService();
+          final decryptedBytes = await workerService.decrypt(audioData, keyBox);
+          return (true, decryptedBytes, outputName, null);
+        } catch (e) {
+          return (false, null, null, 'Web Worker 解密失败: $e');
+        }
+      }
+
+      // Native 端直接在当前 Isolate 解密（会被 compute 包裹）
       final outputBytes = Uint8List(audioData.length);
       for (var i = 0; i < audioData.length; i++) {
         final j = (i + 1) & 0xff;
