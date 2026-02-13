@@ -1,8 +1,8 @@
 /// NCM 文件解密器 - 纯 Dart 实现
 /// 无需原生依赖，使用 pointycastle 进行 AES 解密
+library;
 
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:pointycastle/pointycastle.dart';
 import '../services/web_worker_service.dart';

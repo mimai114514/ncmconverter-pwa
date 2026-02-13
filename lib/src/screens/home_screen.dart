@@ -1,13 +1,16 @@
 /// 主界面 - Web 适配版
 /// 移除 dart:io，使用 Web 原生 API 和 file_picker
+library;
 
 import 'dart:async';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
 import '../../widgets/progress_card.dart';
+import '../../widgets/responsive_layout.dart';
 import '../models/ncm_file.dart';
 import '../services/ncm_decoder.dart';
+import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<NcmFile> _files = [];
+  final List<NcmFile> _files = [];
   bool _isProcessing = false;
   int _completed = 0;
   int _failed = 0;
@@ -31,70 +34,86 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('NCM Converter PWA'),
         backgroundColor: theme.colorScheme.inversePrimary,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: '设置',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // 文件选择区域
-            _buildFileSelector(theme),
+      body: ResponsiveLayout(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // 文件选择区域
+              _buildFileSelector(theme),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // 文件列表
-            Expanded(child: _buildFileList()),
+              // 文件列表
+              Expanded(child: _buildFileList()),
 
-            // 进度显示
-            if (_isProcessing || _files.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: ProgressCard(
-                  total: _files.length,
-                  completed: _completed,
-                  failed: _failed,
-                  currentFile: _currentFile,
-                  isProcessing: _isProcessing,
+              // 进度显示
+              if (_isProcessing || _files.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: ProgressCard(
+                    total: _files.length,
+                    completed: _completed,
+                    failed: _failed,
+                    currentFile: _currentFile,
+                    isProcessing: _isProcessing,
+                  ),
                 ),
-              ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // 底部按钮栏
-            Row(
-              children: [
-                if (_files.isNotEmpty)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: OutlinedButton.icon(
-                        onPressed: _isProcessing ? null : _clearList,
-                        icon: const Icon(Icons.delete_outline),
-                        label: const Text('清空列表'),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+              // 底部按钮栏
+              Row(
+                children: [
+                  if (_files.isNotEmpty)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: OutlinedButton.icon(
+                          onPressed: _isProcessing ? null : _clearList,
+                          icon: const Icon(Icons.delete_outline),
+                          label: const Text('清空列表'),
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                          ),
                         ),
                       ),
                     ),
+                  Expanded(
+                    flex: 2,
+                    child: FilledButton.icon(
+                      onPressed: _canStart ? _startDecoding : null,
+                      icon: Icon(
+                        _isProcessing
+                            ? Icons.hourglass_empty
+                            : Icons.play_arrow,
+                      ),
+                      label: Text(
+                        _isProcessing ? '正在处理...' : '开始转换 (${_files.length})',
+                      ),
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                      ),
+                    ),
                   ),
-                Expanded(
-                  flex: 2,
-                  child: FilledButton.icon(
-                    onPressed: _canStart ? _startDecoding : null,
-                    icon: Icon(
-                      _isProcessing ? Icons.hourglass_empty : Icons.play_arrow,
-                    ),
-                    label: Text(
-                      _isProcessing ? '正在处理...' : '开始转换 (${_files.length})',
-                    ),
-                    style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

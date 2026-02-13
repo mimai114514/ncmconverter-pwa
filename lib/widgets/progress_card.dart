@@ -1,4 +1,5 @@
 /// 进度卡片组件
+library;
 
 import 'package:flutter/material.dart';
 

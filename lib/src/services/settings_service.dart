@@ -1,5 +1,6 @@
 /// 设置服务
 /// 提供应用设置的持久化存储和读取
+library;
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';

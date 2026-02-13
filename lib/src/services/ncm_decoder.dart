@@ -1,5 +1,6 @@
 /// NCM 解密器服务
 /// 提供高层封装，支持后台解密
+library;
 
 import 'dart:async';
 
