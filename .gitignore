@@ -74,3 +74,11 @@ crash_log.txt
 build-apk.lnk
 devtools_options.yaml
 Release-Windows.lnk
+
+# Frontend specific
+node_modules/
+dist/
+.tmp/
+.eslintcache
+*.local
+
