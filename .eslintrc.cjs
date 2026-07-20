@@ -15,6 +15,7 @@ module.exports = {
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
   rules: {
     '@typescript-eslint/no-explicit-any': 'off',
+    'no-trailing-spaces': 'error',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react-refresh/only-export-components': 'warn',

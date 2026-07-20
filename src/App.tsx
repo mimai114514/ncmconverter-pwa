@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Settings, 
-  Music, 
-  UploadCloud, 
-  CheckCircle2, 
-  XCircle, 
-  Loader2, 
-  Download, 
-  Trash2, 
-  Play, 
-  Moon, 
-  Sun, 
-  Github, 
-  Plus, 
+import {
+  Settings,
+  Music,
+  UploadCloud,
+  CheckCircle2,
+  XCircle,
+  Loader2,
+  Download,
+  Trash2,
+  Play,
+  Moon,
+  Sun,
+  Github,
+  Plus,
   Minus,
   Sparkles,
   Info
@@ -44,12 +44,12 @@ export default function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [isDark, setIsDark] = useState(true);
-  
+
   // Settings State
   const [settings, setSettings] = useState<AppSettings>(settingsService.get());
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Initialize theme
@@ -176,20 +176,20 @@ export default function App() {
     }
 
     // Reset status of non-success files
-    setFiles(prev => prev.map(f => 
-      f.status !== 'success' 
-        ? { ...f, status: 'pending', progress: 0, errorMessage: undefined } 
+    setFiles(prev => prev.map(f =>
+      f.status !== 'success'
+        ? { ...f, status: 'pending', progress: 0, errorMessage: undefined }
         : f
     ));
 
     const maxThreads = settings.threadCount;
     let nextIndex = 0;
-    
+
     const workerTask = async () => {
       while (nextIndex < pendingList.length) {
         const itemIndex = nextIndex++;
         const item = pendingList[itemIndex];
-        
+
         // Update to processing
         setFiles(prev => prev.map(f => f.id === item.id ? { ...f, status: 'processing', progress: 10 } : f));
 
@@ -259,15 +259,15 @@ export default function App() {
   const successCount = files.filter(f => f.status === 'success').length;
   const failedCount = files.filter(f => f.status === 'failed').length;
   const processingCount = files.filter(f => f.status === 'processing').length;
-  const overallProgress = totalCount > 0 
-    ? Math.round(((successCount + failedCount) / totalCount) * 100) 
+  const overallProgress = totalCount > 0
+    ? Math.round(((successCount + failedCount) / totalCount) * 100)
     : 0;
 
   const hasSuccessfulBytes = files.some(f => f.status === 'success' && f.outputBytes);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-start font-sans relative overflow-x-hidden">
-      
+
       {/* Decorative Blur Orbs */}
       <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-red-900/10 blur-[120px] pointer-events-none z-0" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-indigo-900/10 blur-[150px] pointer-events-none z-0" />
@@ -289,15 +289,15 @@ export default function App() {
         </div>
 
         <div className="flex items-center space-x-2">
-          <button 
+          <button
             onClick={toggleTheme}
             className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-900 transition-colors"
             title={isDark ? "切换为明亮模式" : "切换为暗黑模式"}
           >
             {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
-          
-          <button 
+
+          <button
             onClick={() => setIsSettingsOpen(true)}
             className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-900 transition-colors"
             title="高级设置"
@@ -305,7 +305,7 @@ export default function App() {
             <Settings className="w-5 h-5" />
           </button>
 
-          <button 
+          <button
             onClick={() => setIsAboutOpen(true)}
             className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-900 transition-colors"
             title="关于本软件"
@@ -317,27 +317,27 @@ export default function App() {
 
       {/* Main Content */}
       <main className="w-full max-w-5xl px-6 py-8 flex-1 flex flex-col gap-6 z-10">
-        
+
         {/* Upload Dropzone */}
-        <div 
+        <div
           onDragEnter={handleDrag}
           onDragOver={handleDrag}
           onDragLeave={handleDrag}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
           className={`group border-2 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 relative overflow-hidden ${
-            dragActive 
-              ? 'border-red-500 bg-red-950/15 scale-[0.99] shadow-inner' 
+            dragActive
+              ? 'border-red-500 bg-red-950/15 scale-[0.99] shadow-inner'
               : 'border-slate-800 bg-slate-900/20 hover:border-slate-700 hover:bg-slate-900/30'
           }`}
         >
-          <input 
+          <input
             ref={fileInputRef}
-            type="file" 
-            accept=".ncm" 
-            multiple 
+            type="file"
+            accept=".ncm"
+            multiple
             onChange={handleFileChange}
-            className="hidden" 
+            className="hidden"
           />
           <div className="p-4 bg-slate-900/50 rounded-2xl group-hover:scale-110 transition-transform duration-300 border border-slate-800/80 mb-4">
             <UploadCloud className="w-8 h-8 text-red-500" />
@@ -364,15 +364,15 @@ export default function App() {
                 </span>
               </div>
               <div className="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden border border-slate-950">
-                <div 
-                  className="bg-gradient-to-r from-red-500 to-rose-600 h-full rounded-full transition-all duration-300 ease-out" 
+                <div
+                  className="bg-gradient-to-r from-red-500 to-rose-600 h-full rounded-full transition-all duration-300 ease-out"
                   style={{ width: `${overallProgress}%` }}
                 />
               </div>
             </div>
 
             <div className="flex items-center gap-3 w-full md:w-auto">
-              <button 
+              <button
                 onClick={clearList}
                 disabled={isProcessing}
                 className="flex-1 md:flex-none py-3 px-5 border border-slate-800 rounded-xl text-sm font-medium hover:bg-slate-900 hover:text-white disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
@@ -380,8 +380,8 @@ export default function App() {
                 <Trash2 className="w-4 h-4" />
                 清空列表
               </button>
-              
-              <button 
+
+              <button
                 onClick={startProcessing}
                 disabled={isProcessing || successCount === totalCount}
                 className="flex-2 md:flex-none py-3 px-8 bg-red-600 hover:bg-red-500 text-white rounded-xl text-sm font-semibold shadow-lg shadow-red-600/15 disabled:opacity-50 disabled:hover:bg-red-600 transition-all flex items-center justify-center gap-2"
@@ -410,7 +410,7 @@ export default function App() {
                 待处理列表
               </h2>
               {hasSuccessfulBytes && (
-                <button 
+                <button
                   onClick={handleDownloadAll}
                   className="text-xs text-red-500 hover:text-red-400 font-medium flex items-center gap-1"
                 >
@@ -425,28 +425,28 @@ export default function App() {
                 const isProcessingItem = item.status === 'processing';
                 const isSuccessItem = item.status === 'success';
                 const isFailedItem = item.status === 'failed';
-                
+
                 // Format artists if metadata exists
-                const artistName = item.metadata?.artist 
+                const artistName = item.metadata?.artist
                   ? item.metadata.artist.map(a => a[0]).join(', ')
                   : null;
 
                 return (
-                  <div 
+                  <div
                     key={item.id}
                     className="glassmorphism hover-glow rounded-xl p-4 flex items-center justify-between border border-slate-900/60 relative overflow-hidden transition-all duration-300"
                   >
-                    
+
                     {/* Tiny item progress slider */}
                     {isProcessingItem && (
-                      <div 
-                        className="absolute bottom-0 left-0 bg-red-600/10 h-1 transition-all duration-300" 
+                      <div
+                        className="absolute bottom-0 left-0 bg-red-600/10 h-1 transition-all duration-300"
                         style={{ width: `${item.progress}%` }}
                       />
                     )}
 
                     <div className="flex items-center space-x-3.5 min-w-0 flex-1">
-                      
+
                       {/* Left Status Icon */}
                       <div className="flex-shrink-0">
                         {isProcessingItem && <Loader2 className="w-5 h-5 text-red-500 animate-spin" />}
@@ -465,11 +465,11 @@ export default function App() {
                             {(item.size / 1024 / 1024).toFixed(2)} MB
                           </span>
                         </div>
-                        
+
                         <p className="text-xs text-slate-500 truncate mt-0.5">
                           {artistName ? `${artistName} • ` : ''}
-                          {isSuccessItem && item.outputName 
-                            ? `已输出: ${item.outputName}` 
+                          {isSuccessItem && item.outputName
+                            ? `已输出: ${item.outputName}`
                             : item.name
                           }
                         </p>
@@ -486,7 +486,7 @@ export default function App() {
                     {/* Right action button */}
                     <div className="ml-4 flex-shrink-0">
                       {isSuccessItem && item.outputBytes ? (
-                        <button 
+                        <button
                           onClick={() => handleDownloadSingle(item)}
                           className="p-2 text-slate-400 hover:text-emerald-500 rounded-lg hover:bg-slate-900 transition-colors"
                           title="点击下载音频"
@@ -495,7 +495,7 @@ export default function App() {
                         </button>
                       ) : (
                         !isProcessing && (
-                          <button 
+                          <button
                             onClick={() => removeFile(item.id)}
                             className="p-2 text-slate-500 hover:text-red-500 rounded-lg hover:bg-slate-900 transition-colors"
                             title="从列表移除"
@@ -524,10 +524,10 @@ export default function App() {
       <footer className="w-full max-w-5xl py-6 px-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 z-10 gap-3">
         <p>© 2026 NCM Converter PWA. Powered by React + Web Worker.</p>
         <div className="flex items-center space-x-4">
-          <a 
-            href="https://github.com/mimai114514/ncmconverter" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://github.com/mimai114514/ncmconverter"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-slate-400 transition-colors flex items-center gap-1"
           >
             <Github className="w-4 h-4" />
@@ -539,7 +539,7 @@ export default function App() {
       {/* Settings Dialog Overlay */}
       {isSettingsOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div 
+          <div
             className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
@@ -548,7 +548,7 @@ export default function App() {
                 <Settings className="w-5 h-5 text-red-500" />
                 高级设置参数
               </h3>
-              <button 
+              <button
                 onClick={() => setIsSettingsOpen(false)}
                 className="text-slate-500 hover:text-white transition-colors text-sm"
               >
@@ -557,7 +557,7 @@ export default function App() {
             </div>
 
             <div className="space-y-6">
-              
+
               {/* Thread count slider */}
               <div>
                 <div className="flex justify-between items-center mb-2">
@@ -569,14 +569,14 @@ export default function App() {
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <button 
+                  <button
                     onClick={() => updateSetting('threadCount', Math.max(1, settings.threadCount - 1))}
                     disabled={settings.threadCount <= 1}
                     className="p-2 border border-slate-800 hover:bg-slate-800 rounded-lg text-slate-400 disabled:opacity-30"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <input 
+                  <input
                     type="range"
                     min="1"
                     max="16"
@@ -584,7 +584,7 @@ export default function App() {
                     onChange={(e) => updateSetting('threadCount', parseInt(e.target.value))}
                     className="flex-1 accent-red-500 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer"
                   />
-                  <button 
+                  <button
                     onClick={() => {
                       const next = settings.threadCount + 1;
                       if (next > 8 && !settings.ignoreMemoryWarning) {
@@ -618,8 +618,8 @@ export default function App() {
                   </span>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer ml-4 mt-1">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     checked={settings.autoSave}
                     onChange={(e) => {
                       const active = e.target.checked;
@@ -646,14 +646,14 @@ export default function App() {
       {/* About Dialog Overlay */}
       {isAboutOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div 
+          <div
             className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col items-center text-center"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-3.5 bg-red-500/10 rounded-full mb-4 border border-red-500/20 text-red-500">
               <Music className="w-8 h-8" />
             </div>
-            
+
             <h3 className="text-xl font-bold text-slate-100 mb-1">
               NCM Converter PWA
             </h3>
@@ -681,7 +681,7 @@ export default function App() {
               </div>
             </div>
 
-            <button 
+            <button
               onClick={() => setIsAboutOpen(false)}
               className="mt-6 w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-sm font-semibold transition-colors"
             >

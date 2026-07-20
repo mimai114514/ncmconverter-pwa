@@ -39,7 +39,7 @@ function wordArrayToUint8Array(wordArray: CryptoJS.lib.WordArray): Uint8Array {
 function aesEcbDecrypt(dataBytes: Uint8Array, keyBytes: Uint8Array): Uint8Array {
   const ciphertext = uint8ArrayToWordArray(dataBytes);
   const key = uint8ArrayToWordArray(keyBytes);
-  
+
   const decrypted = CryptoJS.AES.decrypt(
     { ciphertext } as any,
     key,
@@ -167,7 +167,7 @@ export function parseNcmMetadata(inputBytes: Uint8Array, originalName: string) {
   // 跳过 "163 key(Don't modify):" 前缀 (22 bytes)，Base64 解码
   const textDecoder = new TextDecoder('utf-8');
   const metaBase64 = textDecoder.decode(metaData.subarray(22));
-  
+
   // Base64 转换为字节
   const rawBase64 = atob(metaBase64);
   const metaEncrypted = new Uint8Array(rawBase64.length);
