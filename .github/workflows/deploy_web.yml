@@ -18,26 +18,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          channel: 'stable'
-          cache: true
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: flutter pub get
+        run: npm ci
 
       - name: Build Web
-        run: flutter build web --release --no-tree-shake-icons
+        run: npm run build
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ncmconverter-pwa # Optional: Ensure this matches your Cloudflare Pages project name if already created, or it will create/deploy to this name.
-          directory: build/web
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: main # Optional: defaults to the branch that triggered the workflow
-          workingDirectory: .
-          wranglerVersion: '3' # Optional: defaults to the latest version
+          command: pages deploy dist --project-name=ncmconverter-pwa --branch=${{ github.ref_name }}
