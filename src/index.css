@@ -47,6 +47,41 @@
   }
 }
 
+/* 浅色主题：组件沿用既有深色类名，通过根节点主题覆盖颜色。 */
+html:not(.dark) body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) [class~="bg-slate-950"] { background-color: #f8fafc !important; }
+html:not(.dark) [class~="bg-slate-950/70"] { background-color: rgb(248 250 252 / 0.86) !important; }
+html:not(.dark) [class~="bg-slate-900"] { background-color: #ffffff !important; }
+html:not(.dark) [class~="bg-slate-900/90"] { background-color: rgb(255 255 255 / 0.96) !important; }
+html:not(.dark) [class~="bg-slate-900/50"],
+html:not(.dark) [class~="bg-slate-900/20"],
+html:not(.dark) [class~="bg-slate-900/[0.04]"] { background-color: rgb(241 245 249 / 0.78) !important; }
+html:not(.dark) [class~="bg-slate-800"] { background-color: #e2e8f0 !important; }
+html:not(.dark) [class~="text-slate-100"] { color: #0f172a !important; }
+html:not(.dark) [class~="text-slate-200"] { color: #1e293b !important; }
+html:not(.dark) [class~="text-slate-300"] { color: #334155 !important; }
+html:not(.dark) [class~="text-slate-400"] { color: #475569 !important; }
+html:not(.dark) [class~="text-slate-500"],
+html:not(.dark) [class~="text-slate-600"] { color: #64748b !important; }
+html:not(.dark) [class~="text-slate-800"] { color: #cbd5e1 !important; }
+html:not(.dark) [class~="border-slate-950"],
+html:not(.dark) [class~="border-slate-900"],
+html:not(.dark) [class~="border-slate-900/60"] { border-color: #e2e8f0 !important; }
+html:not(.dark) [class~="border-slate-800"],
+html:not(.dark) [class~="border-slate-800/80"] { border-color: #cbd5e1 !important; }
+html:not(.dark) [class~="hover:bg-slate-900"]:hover,
+html:not(.dark) [class~="hover:bg-slate-900/30"]:hover,
+html:not(.dark) [class~="hover:bg-slate-800"]:hover { background-color: #e2e8f0 !important; }
+html:not(.dark) [class~="hover:bg-slate-700"]:hover { background-color: #cbd5e1 !important; }
+html:not(.dark) .glassmorphism {
+  background: rgb(255 255 255 / 0.72);
+  border-color: rgb(148 163 184 / 0.35);
+}
+
 /* Custom Micro-animations */
 .glassmorphism {
   background: rgba(15, 23, 42, 0.45);

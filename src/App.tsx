@@ -43,7 +43,10 @@ export default function App() {
   const [files, setFiles] = useState<NcmFileItem[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [dragActive, setDragActive] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return window.localStorage.getItem('theme') !== 'light';
+  });
 
   // Settings State
   const [settings, setSettings] = useState<AppSettings>(settingsService.get());
@@ -54,8 +57,7 @@ export default function App() {
 
   // Initialize theme
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const dark = savedTheme ? savedTheme === 'dark' : true;
+    const dark = localStorage.getItem('theme') !== 'light';
     setIsDark(dark);
     if (dark) {
       document.documentElement.classList.add('dark');

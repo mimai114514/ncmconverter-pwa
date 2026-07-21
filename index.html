@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/assets/icon-ncmconverter-v1.png" />
@@ -8,6 +8,15 @@
     <meta name="description" content="简洁高效的网易云音乐 .ncm 格式文件离线转换工具。所有解密都在浏览器本地完成，绝对安全、高速。" />
   </head>
   <body class="bg-slate-950 text-slate-50 antialiased min-h-screen selection:bg-red-500 selection:text-white">
+    <script>
+      try {
+        if (localStorage.getItem('theme') !== 'light') {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (_) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
