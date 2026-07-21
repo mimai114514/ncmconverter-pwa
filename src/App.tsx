@@ -271,13 +271,13 @@ export default function App() {
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-start font-sans relative overflow-x-hidden">
 
       {/* Decorative Blur Orbs */}
-      <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-red-900/10 blur-[120px] pointer-events-none z-0" />
+      <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-brand-900/10 blur-[120px] pointer-events-none z-0" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-indigo-900/10 blur-[150px] pointer-events-none z-0" />
 
       {/* Header */}
       <header className="w-full max-w-5xl px-6 py-4 flex items-center justify-between border-b border-slate-900 z-10 backdrop-blur-md sticky top-0 bg-slate-950/70">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-red-500 rounded-xl shadow-lg shadow-red-500/20 flex items-center justify-center">
+          <div className="p-2 bg-brand-500 rounded-xl shadow-lg shadow-brand-500/20 flex items-center justify-center">
             <Music className="w-6 h-6 text-white" />
           </div>
           <div>
@@ -329,7 +329,7 @@ export default function App() {
           onClick={() => fileInputRef.current?.click()}
           className={`group border-2 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 relative overflow-hidden ${
             dragActive
-              ? 'border-red-500 bg-red-950/15 scale-[0.99] shadow-inner'
+              ? 'border-brand-500 bg-brand-950/15 scale-[0.99] shadow-inner'
               : 'border-slate-800 bg-slate-900/20 hover:border-slate-700 hover:bg-slate-900/30'
           }`}
         >
@@ -342,7 +342,7 @@ export default function App() {
             className="hidden"
           />
           <div className="p-4 bg-slate-900/50 rounded-2xl group-hover:scale-110 transition-transform duration-300 border border-slate-800/80 mb-4">
-            <UploadCloud className="w-8 h-8 text-red-500" />
+            <UploadCloud className="w-8 h-8 text-brand-500" />
           </div>
           <h3 className="text-lg font-semibold text-slate-200 mb-1 text-center">
             拖拽或点击上传 .ncm 格式音乐
@@ -358,7 +358,7 @@ export default function App() {
             <div className="flex-1 w-full">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm text-slate-400 font-medium flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-red-500 animate-pulse" />
+                  <Sparkles className="w-4 h-4 text-brand-500 animate-pulse" />
                   解密转换进度: {overallProgress}%
                 </span>
                 <span className="text-xs text-slate-500">
@@ -367,7 +367,7 @@ export default function App() {
               </div>
               <div className="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden border border-slate-950">
                 <div
-                  className="bg-gradient-to-r from-red-500 to-rose-600 h-full rounded-full transition-all duration-300 ease-out"
+                  className="bg-gradient-to-r from-brand-500 to-brand-600 h-full rounded-full transition-all duration-300 ease-out"
                   style={{ width: `${overallProgress}%` }}
                 />
               </div>
@@ -386,7 +386,7 @@ export default function App() {
               <button
                 onClick={startProcessing}
                 disabled={isProcessing || successCount === totalCount}
-                className="flex-2 md:flex-none py-3 px-8 bg-red-600 hover:bg-red-500 text-white rounded-xl text-sm font-semibold shadow-lg shadow-red-600/15 disabled:opacity-50 disabled:hover:bg-red-600 transition-all flex items-center justify-center gap-2"
+                className="flex-2 md:flex-none py-3 px-8 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-sm font-semibold shadow-lg shadow-brand-600/15 disabled:opacity-50 disabled:hover:bg-brand-600 transition-all flex items-center justify-center gap-2"
               >
                 {isProcessing ? (
                   <>
@@ -414,7 +414,7 @@ export default function App() {
               {hasSuccessfulBytes && (
                 <button
                   onClick={handleDownloadAll}
-                  className="text-xs text-red-500 hover:text-red-400 font-medium flex items-center gap-1"
+                  className="text-xs text-brand-500 hover:text-brand-600 font-medium flex items-center gap-1"
                 >
                   <Download className="w-3.5 h-3.5" />
                   批量下载全部已成功音频
@@ -442,7 +442,7 @@ export default function App() {
                     {/* Tiny item progress slider */}
                     {isProcessingItem && (
                       <div
-                        className="absolute bottom-0 left-0 bg-red-600/10 h-1 transition-all duration-300"
+                        className="absolute bottom-0 left-0 bg-brand-600/10 h-1 transition-all duration-300"
                         style={{ width: `${item.progress}%` }}
                       />
                     )}
@@ -451,7 +451,7 @@ export default function App() {
 
                       {/* Left Status Icon */}
                       <div className="flex-shrink-0">
-                        {isProcessingItem && <Loader2 className="w-5 h-5 text-red-500 animate-spin" />}
+                        {isProcessingItem && <Loader2 className="w-5 h-5 text-brand-500 animate-spin" />}
                         {isSuccessItem && <CheckCircle2 className="w-5 h-5 text-emerald-500" />}
                         {isFailedItem && <XCircle className="w-5 h-5 text-rose-500" />}
                         {item.status === 'pending' && <Music className="w-5 h-5 text-slate-600" />}
@@ -499,7 +499,7 @@ export default function App() {
                         !isProcessing && (
                           <button
                             onClick={() => removeFile(item.id)}
-                            className="p-2 text-slate-500 hover:text-red-500 rounded-lg hover:bg-slate-900 transition-colors"
+                            className="p-2 text-slate-500 hover:text-brand-500 rounded-lg hover:bg-slate-900 transition-colors"
                             title="从列表移除"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -547,7 +547,7 @@ export default function App() {
           >
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-lg font-bold flex items-center gap-2">
-                <Settings className="w-5 h-5 text-red-500" />
+                <Settings className="w-5 h-5 text-brand-500" />
                 高级设置参数
               </h3>
               <button
@@ -566,7 +566,7 @@ export default function App() {
                   <label className="text-sm font-medium text-slate-300">
                     最大并发 Web Worker 数 (线程数)
                   </label>
-                  <span className="text-sm font-bold text-red-500 font-mono">
+                  <span className="text-sm font-bold text-brand-500 font-mono">
                     {settings.threadCount}
                   </span>
                 </div>
@@ -584,7 +584,7 @@ export default function App() {
                     max="16"
                     value={settings.threadCount}
                     onChange={(e) => updateSetting('threadCount', parseInt(e.target.value))}
-                    className="flex-1 accent-red-500 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer"
+                    className="flex-1 accent-brand-500 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer"
                   />
                   <button
                     onClick={() => {
@@ -636,7 +636,7 @@ export default function App() {
                     }}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-slate-800 rounded-full peer peer-focus:ring-2 peer-focus:ring-red-500/25 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-slate-300 after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600 peer-checked:after:bg-white peer-checked:after:border-white" />
+                  <div className="w-11 h-6 bg-slate-700 rounded-full peer peer-focus:ring-2 peer-focus:ring-brand-500/30 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-600 peer-checked:after:bg-white peer-checked:after:border-white" />
                 </label>
               </div>
 
@@ -652,7 +652,7 @@ export default function App() {
             className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col items-center text-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-3.5 bg-red-500/10 rounded-full mb-4 border border-red-500/20 text-red-500">
+            <div className="p-3.5 bg-brand-500/10 rounded-full mb-4 border border-brand-500/20 text-brand-500">
               <Music className="w-8 h-8" />
             </div>
 
