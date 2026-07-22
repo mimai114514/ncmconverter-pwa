@@ -319,7 +319,7 @@ export default function App() {
       </header>
 
       {/* Main Content */}
-      <main className="w-full max-w-5xl px-6 py-8 flex-1 flex flex-col gap-6 z-10">
+      <main className="w-full max-w-5xl px-6 py-8 flex flex-col gap-6 z-10">
 
         {/* Upload Dropzone */}
         <div
@@ -515,7 +515,7 @@ export default function App() {
             </div>
           </div>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center py-20 text-slate-600 border border-dashed border-slate-900/60 rounded-2xl bg-slate-900/[0.04]">
+          <div className="flex flex-col items-center justify-center py-12 text-slate-600 border border-dashed border-slate-900/60 rounded-2xl bg-slate-900/[0.04]">
             <Music className="w-12 h-12 stroke-[1.2] mb-3 text-slate-800" />
             <p className="text-sm">暂无待处理文件，导入后即可开始解密</p>
           </div>
