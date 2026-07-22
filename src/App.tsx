@@ -319,7 +319,7 @@ export default function App() {
       </header>
 
       {/* Main Content */}
-      <main className="w-full max-w-5xl px-6 py-8 flex flex-col gap-6 z-10">
+      <main className="w-full max-w-5xl px-6 py-8 flex-1 flex flex-col gap-6 z-10">
 
         {/* Upload Dropzone */}
         <div
@@ -515,7 +515,7 @@ export default function App() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-20 text-slate-600 border border-dashed border-slate-900/60 rounded-2xl bg-slate-900/[0.04]">
+          <div className="flex-1 flex flex-col items-center justify-center py-20 text-slate-600 border border-dashed border-slate-900/60 rounded-2xl bg-slate-900/[0.04]">
             <Music className="w-12 h-12 stroke-[1.2] mb-3 text-slate-800" />
             <p className="text-sm">暂无待处理文件，导入后即可开始解密</p>
           </div>
@@ -524,19 +524,8 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full max-w-5xl py-6 px-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 z-10 gap-3">
-        <p>© 2026 NCM Converter PWA. Powered by React + Web Worker.</p>
-        <div className="flex items-center space-x-4">
-          <a
-            href="https://github.com/mimai114514/ncmconverter"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-slate-400 transition-colors flex items-center gap-1"
-          >
-            <Github className="w-4 h-4" />
-            GitHub Repository
-          </a>
-        </div>
+      <footer className="w-full max-w-5xl py-6 px-6 border-t border-slate-900 flex items-center justify-center text-xs text-slate-600 z-10">
+        <p>© 2026 Infinity. Powered by Cloudflare Pages + React.</p>
       </footer>
 
       {/* Settings Dialog Overlay */}
@@ -684,6 +673,15 @@ export default function App() {
                 <span>技术框架</span>
                 <span className="font-semibold text-slate-300">React + Vite + Tailwind CSS</span>
               </div>
+              <a
+                href="https://github.com/mimai114514/ncmconverter"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 py-2.5 border border-slate-800 rounded-lg text-sm text-slate-400 hover:text-brand-500 hover:bg-slate-800 transition-colors flex items-center justify-center gap-2"
+              >
+                <Github className="w-4 h-4" />
+                GitHub Repository
+              </a>
             </div>
 
             <button
