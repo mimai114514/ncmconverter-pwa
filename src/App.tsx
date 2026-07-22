@@ -269,14 +269,14 @@ export default function App() {
   const hasSuccessfulBytes = files.some(f => f.status === 'success' && f.outputBytes);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-start font-sans relative overflow-x-hidden">
+    <div className="h-[100dvh] bg-slate-950 text-slate-100 flex flex-col items-center justify-start font-sans relative overflow-hidden">
 
       {/* Decorative Blur Orbs */}
       <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-brand-900/10 blur-[120px] pointer-events-none z-0" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-indigo-900/10 blur-[150px] pointer-events-none z-0" />
 
       {/* Header */}
-      <header className="w-full max-w-5xl px-6 py-4 flex items-center justify-between border-b border-slate-900 z-10 backdrop-blur-md bg-slate-950/70">
+      <header className="w-full max-w-5xl px-6 py-4 flex shrink-0 items-center justify-between border-b border-slate-900 z-10 backdrop-blur-md bg-slate-950/70">
         <div className="flex items-center space-x-3">
           <div className="p-2 bg-brand-500 rounded-xl shadow-lg shadow-brand-500/20 flex items-center justify-center">
             <Music className="w-6 h-6 text-white" />
@@ -319,7 +319,7 @@ export default function App() {
       </header>
 
       {/* Main Content */}
-      <main className="w-full max-w-5xl px-6 py-8 flex flex-col gap-6 z-10">
+      <main className="w-full max-w-5xl px-6 py-8 flex-1 min-h-0 flex flex-col gap-6 z-10">
 
         {/* Upload Dropzone */}
         <div
@@ -407,7 +407,7 @@ export default function App() {
 
         {/* File List Section */}
         {files.length > 0 ? (
-          <div className="flex flex-col gap-3">
+          <div className="flex-1 min-h-0 flex flex-col gap-3">
             <div className="flex items-center justify-between px-2">
               <h2 className="text-sm font-semibold text-slate-400 tracking-wider uppercase">
                 待处理列表
@@ -423,7 +423,7 @@ export default function App() {
               )}
             </div>
 
-            <div className="max-h-[400px] overflow-y-auto pr-1 flex flex-col gap-2.5 custom-scrollbar">
+            <div className="flex-1 min-h-0 overflow-y-auto pr-1 flex flex-col gap-2.5 custom-scrollbar">
               {files.map(item => {
                 const isProcessingItem = item.status === 'processing';
                 const isSuccessItem = item.status === 'success';
@@ -515,7 +515,7 @@ export default function App() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-12 text-slate-600 border border-dashed border-slate-900/60 rounded-2xl bg-slate-900/[0.04]">
+          <div className="flex-1 min-h-0 flex flex-col items-center justify-center py-12 text-slate-600 border border-dashed border-slate-900/60 rounded-2xl bg-slate-900/[0.04]">
             <Music className="w-12 h-12 stroke-[1.2] mb-3 text-slate-800" />
             <p className="text-sm">暂无待处理文件，导入后即可开始解密</p>
           </div>
@@ -524,7 +524,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full max-w-5xl py-6 px-6 border-t border-slate-900 flex items-center justify-center text-xs text-slate-600 z-10">
+      <footer className="w-full max-w-5xl py-6 px-6 shrink-0 border-t border-slate-900 flex items-center justify-center text-xs text-slate-600 z-10">
         <p>© 2026 Infinity. Powered by Cloudflare Pages + React.</p>
       </footer>
 
