@@ -356,163 +356,164 @@ export default function App() {
         {/* Queue Overview and Process Controller */}
         {files.length > 0 ? (
           <div className="glassmorphism rounded-2xl p-6 flex flex-col gap-6 border border-slate-900">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            {/* File List Section — top of card */}
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between px-2">
+                <h2 className="text-sm font-semibold text-slate-400 tracking-wider uppercase">
+                  文件列表
+                </h2>
+                {hasSuccessfulBytes && (
+                  <button
+                    onClick={handleDownloadAll}
+                    className="text-xs text-brand-500 hover:text-brand-600 font-medium flex items-center gap-1"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    批量下载全部已成功音频
+                  </button>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-2.5">
+                {files.map(item => {
+                  const isProcessingItem = item.status === 'processing';
+                  const isSuccessItem = item.status === 'success';
+                  const isFailedItem = item.status === 'failed';
+
+                  // Format artists if metadata exists
+                  const artistName = item.metadata?.artist
+                    ? item.metadata.artist.map(a => a[0]).join(', ')
+                    : null;
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="glassmorphism hover-glow rounded-xl p-4 flex items-center justify-between border border-slate-900/60 relative overflow-hidden transition-all duration-300"
+                    >
+
+                      {/* Tiny item progress slider */}
+                      {isProcessingItem && (
+                        <div
+                          className="absolute bottom-0 left-0 bg-brand-600/10 h-1 transition-all duration-300"
+                          style={{ width: `${item.progress}%` }}
+                        />
+                      )}
+
+                      <div className="flex items-center space-x-3.5 min-w-0 flex-1">
+
+                        {/* Left Status Icon */}
+                        <div className="flex-shrink-0">
+                          {isProcessingItem && <Loader2 className="w-5 h-5 text-brand-500 animate-spin" />}
+                          {isSuccessItem && <CheckCircle2 className="w-5 h-5 text-emerald-500" />}
+                          {isFailedItem && <XCircle className="w-5 h-5 text-rose-500" />}
+                          {item.status === 'pending' && <Music className="w-5 h-5 text-slate-600" />}
+                        </div>
+
+                        {/* File Names & Metadata */}
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-baseline space-x-2">
+                            <p className="text-sm font-semibold text-slate-100 truncate">
+                              {item.metadata?.musicName || item.name.replace(/\.ncm$/i, '')}
+                            </p>
+                            <span className="text-[10px] text-slate-600 font-mono">
+                              {(item.size / 1024 / 1024).toFixed(2)} MB
+                            </span>
+                          </div>
+
+                          <p className="text-xs text-slate-500 truncate mt-0.5">
+                            {artistName ? `${artistName} • ` : ''}
+                            {isSuccessItem && item.outputName
+                              ? `已输出: ${item.outputName}`
+                              : item.name
+                            }
+                          </p>
+
+                          {/* Status Message / Error Message */}
+                          {item.errorMessage && (
+                            <p className={`text-[10px] mt-1 font-medium ${isSuccessItem ? 'text-emerald-500/80' : 'text-rose-500/80'}`}>
+                              {item.errorMessage}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Right action button */}
+                      <div className="ml-4 flex-shrink-0">
+                        {isSuccessItem && item.outputBytes ? (
+                          <button
+                            onClick={() => handleDownloadSingle(item)}
+                            className="p-2 text-slate-400 hover:text-emerald-500 rounded-lg hover:bg-slate-900 transition-colors"
+                            title="点击下载音频"
+                          >
+                            <Download className="w-4 h-4" />
+                          </button>
+                        ) : (
+                          !isProcessing && (
+                            <button
+                              onClick={() => removeFile(item.id)}
+                              className="p-2 text-slate-500 hover:text-brand-500 rounded-lg hover:bg-slate-900 transition-colors"
+                              title="从列表移除"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          )
+                        )}
+                      </div>
+
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Progress + action buttons */}
+            <div className="border-t border-slate-800/80 pt-6 flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex-1 w-full">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm text-slate-400 font-medium flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-brand-500 animate-pulse" />
-                  解密转换进度: {overallProgress}%
-                </span>
-                <span className="text-xs text-slate-500">
-                  成功: {successCount} | 失败: {failedCount} | 总数: {totalCount}
-                </span>
-              </div>
-              <div className="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden border border-slate-950">
-                <div
-                  className="bg-gradient-to-r from-brand-500 to-brand-600 h-full rounded-full transition-all duration-300 ease-out"
-                  style={{ width: `${overallProgress}%` }}
-                />
-              </div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-slate-400 font-medium flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-brand-500 animate-pulse" />
+                    解密转换进度: {overallProgress}%
+                  </span>
+                  <span className="text-xs text-slate-500">
+                    成功: {successCount} | 失败: {failedCount} | 总数: {totalCount}
+                  </span>
+                </div>
+                <div className="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden border border-slate-950">
+                  <div
+                    className="bg-gradient-to-r from-brand-500 to-brand-600 h-full rounded-full transition-all duration-300 ease-out"
+                    style={{ width: `${overallProgress}%` }}
+                  />
+                </div>
               </div>
 
               <div className="flex items-center gap-3 w-full md:w-auto">
-              <button
-                onClick={clearList}
-                disabled={isProcessing}
-                className="flex-1 md:flex-none py-3 px-5 border border-slate-800 rounded-xl text-sm font-medium hover:bg-slate-900 hover:text-white disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
-              >
-                <Trash2 className="w-4 h-4" />
-                清空列表
-              </button>
-
-              <button
-                onClick={startProcessing}
-                disabled={isProcessing || successCount === totalCount}
-                className="flex-2 md:flex-none py-3 px-8 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-sm font-semibold shadow-lg shadow-brand-600/15 disabled:opacity-50 disabled:hover:bg-brand-600 transition-all flex items-center justify-center gap-2"
-              >
-                {isProcessing ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    正在解密 ({processingCount} 并发)...
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-4 h-4 fill-current" />
-                    开始解密 ({files.filter(f => f.status !== 'success').length})
-                  </>
-                )}
-              </button>
-              </div>
-          </div>
-
-        {/* File List Section */}
-          <div className="border-t border-slate-800/80 pt-6 flex flex-col gap-3">
-            <div className="flex items-center justify-between px-2">
-              <h2 className="text-sm font-semibold text-slate-400 tracking-wider uppercase">
-                待处理列表
-              </h2>
-              {hasSuccessfulBytes && (
                 <button
-                  onClick={handleDownloadAll}
-                  className="text-xs text-brand-500 hover:text-brand-600 font-medium flex items-center gap-1"
+                  onClick={clearList}
+                  disabled={isProcessing}
+                  className="flex-1 md:flex-none py-3 px-5 border border-slate-800 rounded-xl text-sm font-medium hover:bg-slate-900 hover:text-white disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  批量下载全部已成功音频
+                  <Trash2 className="w-4 h-4" />
+                  清空列表
                 </button>
-              )}
+
+                <button
+                  onClick={startProcessing}
+                  disabled={isProcessing || successCount === totalCount}
+                  className="flex-[2] md:flex-none py-3 px-8 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-sm font-semibold shadow-lg shadow-brand-600/15 disabled:opacity-50 disabled:hover:bg-brand-600 transition-all flex items-center justify-center gap-2"
+                >
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      正在解密 ({processingCount} 并发)...
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-4 h-4 fill-current" />
+                      开始解密 ({files.filter(f => f.status !== 'success').length})
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
-
-            <div className="flex flex-col gap-2.5">
-              {files.map(item => {
-                const isProcessingItem = item.status === 'processing';
-                const isSuccessItem = item.status === 'success';
-                const isFailedItem = item.status === 'failed';
-
-                // Format artists if metadata exists
-                const artistName = item.metadata?.artist
-                  ? item.metadata.artist.map(a => a[0]).join(', ')
-                  : null;
-
-                return (
-                  <div
-                    key={item.id}
-                    className="glassmorphism hover-glow rounded-xl p-4 flex items-center justify-between border border-slate-900/60 relative overflow-hidden transition-all duration-300"
-                  >
-
-                    {/* Tiny item progress slider */}
-                    {isProcessingItem && (
-                      <div
-                        className="absolute bottom-0 left-0 bg-brand-600/10 h-1 transition-all duration-300"
-                        style={{ width: `${item.progress}%` }}
-                      />
-                    )}
-
-                    <div className="flex items-center space-x-3.5 min-w-0 flex-1">
-
-                      {/* Left Status Icon */}
-                      <div className="flex-shrink-0">
-                        {isProcessingItem && <Loader2 className="w-5 h-5 text-brand-500 animate-spin" />}
-                        {isSuccessItem && <CheckCircle2 className="w-5 h-5 text-emerald-500" />}
-                        {isFailedItem && <XCircle className="w-5 h-5 text-rose-500" />}
-                        {item.status === 'pending' && <Music className="w-5 h-5 text-slate-600" />}
-                      </div>
-
-                      {/* File Names & Metadata */}
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-baseline space-x-2">
-                          <p className="text-sm font-semibold text-slate-100 truncate">
-                            {item.metadata?.musicName || item.name.replace(/\.ncm$/i, '')}
-                          </p>
-                          <span className="text-[10px] text-slate-600 font-mono">
-                            {(item.size / 1024 / 1024).toFixed(2)} MB
-                          </span>
-                        </div>
-
-                        <p className="text-xs text-slate-500 truncate mt-0.5">
-                          {artistName ? `${artistName} • ` : ''}
-                          {isSuccessItem && item.outputName
-                            ? `已输出: ${item.outputName}`
-                            : item.name
-                          }
-                        </p>
-
-                        {/* Status Message / Error Message */}
-                        {item.errorMessage && (
-                          <p className={`text-[10px] mt-1 font-medium ${isSuccessItem ? 'text-emerald-500/80' : 'text-rose-500/80'}`}>
-                            {item.errorMessage}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Right action button */}
-                    <div className="ml-4 flex-shrink-0">
-                      {isSuccessItem && item.outputBytes ? (
-                        <button
-                          onClick={() => handleDownloadSingle(item)}
-                          className="p-2 text-slate-400 hover:text-emerald-500 rounded-lg hover:bg-slate-900 transition-colors"
-                          title="点击下载音频"
-                        >
-                          <Download className="w-4 h-4" />
-                        </button>
-                      ) : (
-                        !isProcessing && (
-                          <button
-                            onClick={() => removeFile(item.id)}
-                            className="p-2 text-slate-500 hover:text-brand-500 rounded-lg hover:bg-slate-900 transition-colors"
-                            title="从列表移除"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        )
-                      )}
-                    </div>
-
-                  </div>
-                );
-              })}
-            </div>
-          </div>
           </div>
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center py-12 text-slate-600 border border-dashed border-slate-900/60 rounded-2xl bg-slate-900/[0.04]">
