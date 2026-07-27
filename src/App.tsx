@@ -276,8 +276,9 @@ export default function App() {
       <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-indigo-900/10 blur-[150px] pointer-events-none z-0" />
 
       {/* Header */}
-      <header className="w-full max-w-5xl px-6 py-4 flex items-center justify-between border-b border-slate-900 z-10 backdrop-blur-md bg-slate-950/70">
-        <div className="flex items-center space-x-3">
+      <header className="w-full border-b border-slate-900 z-10 backdrop-blur-md bg-slate-950/70">
+        <div className="w-full max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
           <div className="p-2 bg-brand-500 rounded-xl shadow-lg shadow-brand-500/20 flex items-center justify-center">
             <Music className="w-6 h-6 text-white" />
           </div>
@@ -291,7 +292,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
           <button
             onClick={toggleTheme}
             className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-900 transition-colors"
@@ -315,6 +316,7 @@ export default function App() {
           >
             <Info className="w-5 h-5" />
           </button>
+          </div>
         </div>
       </header>
 
