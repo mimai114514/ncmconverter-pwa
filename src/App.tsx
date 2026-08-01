@@ -676,7 +676,7 @@ export default function App() {
 
             <div className="w-full">
               <a
-                href="https://github.com/mimai114514/ncmconverter"
+                href="https://github.com/mimai114514/ncmconverter-pwa"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-1 py-2.5 border border-slate-800 rounded-lg text-sm text-slate-400 hover:text-brand-500 hover:bg-slate-800 transition-colors flex items-center justify-center gap-2"
