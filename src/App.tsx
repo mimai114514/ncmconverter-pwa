@@ -658,8 +658,8 @@ export default function App() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="p-2 bg-brand-500 rounded-xl shadow-lg shadow-brand-500/20 flex items-center justify-center mb-4">
-              <Music className="w-6 h-6 text-white" />
+            <div className="w-[68px] h-[68px] bg-brand-500 rounded-xl shadow-lg shadow-brand-500/20 flex items-center justify-center mb-4">
+              <Music className="w-[41px] h-[41px] text-white" />
             </div>
 
             <h3 className="text-xl font-bold text-slate-100 mb-1">
@@ -674,7 +674,7 @@ export default function App() {
               所有解密工作完全在您的浏览器本地沙箱中完成，极速安全，不占用服务器流量，让您的音乐解密隐私有绝对保障。
             </p>
 
-            <div className="w-full border-t border-slate-800 pt-4">
+            <div className="w-full pt-4">
               <a
                 href="https://github.com/mimai114514/ncmconverter"
                 target="_blank"
