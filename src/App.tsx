@@ -353,7 +353,7 @@ export default function App() {
             拖拽或点击上传 .ncm 格式音乐
           </h3>
           <p className="text-sm text-slate-500 text-center max-w-md">
-            支持选择多个文件批量导入。解密算法在您本地的浏览器中执行，保证音频绝不传输至外部网络服务器。
+            支持选择多个文件批量导入。转换在您的浏览器中执行，文件不会被上传至云端。
           </p>
         </div>
 
