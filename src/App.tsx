@@ -22,6 +22,8 @@ import { parseNcmMetadata } from './core/ncmDecrypt';
 import { decryptWithWorker } from './workers/worker-client';
 import { settingsService, AppSettings } from './services/settings';
 
+declare const __BUILD_TIME__: string;
+
 interface NcmFileItem {
   id: string;
   file: File;
@@ -644,18 +646,27 @@ export default function App() {
       {isAboutOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
           <div
-            className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col items-center text-center"
+            className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col items-center text-center relative"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-3.5 bg-brand-500/10 rounded-full mb-4 border border-brand-500/20 text-brand-500">
-              <Music className="w-8 h-8" />
+            <button
+              onClick={() => setIsAboutOpen(false)}
+              className="absolute top-4 right-4 p-2 text-slate-500 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+              title="关闭"
+              aria-label="关闭"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="p-2 bg-brand-500 rounded-xl shadow-lg shadow-brand-500/20 flex items-center justify-center mb-4">
+              <Music className="w-6 h-6 text-white" />
             </div>
 
             <h3 className="text-xl font-bold text-slate-100 mb-1">
               NCM Converter PWA
             </h3>
             <p className="text-xs text-slate-500 font-mono mb-4">
-              Version 1.0.0 (React Refactored)
+              {__BUILD_TIME__}
             </p>
 
             <p className="text-sm text-slate-400 leading-relaxed mb-6">
@@ -663,19 +674,7 @@ export default function App() {
               所有解密工作完全在您的浏览器本地沙箱中完成，极速安全，不占用服务器流量，让您的音乐解密隐私有绝对保障。
             </p>
 
-            <div className="w-full border-t border-slate-800 pt-4 flex flex-col gap-3">
-              <div className="flex justify-between text-xs text-slate-400">
-                <span>核心算法</span>
-                <span className="font-semibold text-slate-300">CryptoJS (AES-ECB 256)</span>
-              </div>
-              <div className="flex justify-between text-xs text-slate-400">
-                <span>多线程支持</span>
-                <span className="font-semibold text-slate-300">Web Worker (Transferable Buffer)</span>
-              </div>
-              <div className="flex justify-between text-xs text-slate-400">
-                <span>技术框架</span>
-                <span className="font-semibold text-slate-300">React + Vite + Tailwind CSS</span>
-              </div>
+            <div className="w-full border-t border-slate-800 pt-4">
               <a
                 href="https://github.com/mimai114514/ncmconverter"
                 target="_blank"
@@ -687,12 +686,6 @@ export default function App() {
               </a>
             </div>
 
-            <button
-              onClick={() => setIsAboutOpen(false)}
-              className="mt-6 w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-semibold transition-colors"
-            >
-              完成
-            </button>
           </div>
         </div>
       )}
