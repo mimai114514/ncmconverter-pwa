@@ -669,12 +669,12 @@ export default function App() {
               {__BUILD_TIME__}
             </p>
 
-            <p className="text-sm text-slate-400 leading-relaxed mb-6">
-              本工具是一个基于网页端 PWA 的网易云音乐 .ncm 格式转换工具。<br />
-              所有解密工作完全在您的浏览器本地沙箱中完成，极速安全，不占用服务器流量，让您的音乐解密隐私有绝对保障。
+            <p className="text-sm text-slate-400 leading-relaxed mb-3">
+              本工具是一个网页端 .ncm 格式音乐转换工具。<br />
+              所有解密工作均在您的浏览器本地完成，无需上传云端，极速、安全。
             </p>
 
-            <div className="w-full pt-4">
+            <div className="w-full">
               <a
                 href="https://github.com/mimai114514/ncmconverter"
                 target="_blank"
